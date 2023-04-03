@@ -5,9 +5,10 @@
  * ProcessPrx.C - Implementation of a class to manipulate a PRX
  ***************************************************************/
 
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <cassert>
+
 #include "ProcessPrx.h"
 #include "VirtualMem.h"
 #include "output.h"

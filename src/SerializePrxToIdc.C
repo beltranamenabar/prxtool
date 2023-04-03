@@ -6,7 +6,8 @@
  * a loaded PRX file to a IDA PRO IDC file.
  ***************************************************************/
 
-#include <stdio.h>
+#include <cstdio>
+
 #include "SerializePrxToIdc.h"
 
 /* Build a name from a base and extention */

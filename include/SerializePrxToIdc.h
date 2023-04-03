@@ -9,7 +9,8 @@
 #ifndef __SERIALIZEPRXTOIDC_H__
 #define __SERIALIZEPRXTOIDC_H__
 
-#include <stdio.h>
+#include <cstdio>
+
 #include "SerializePrx.h"
 
 class CSerializePrxToIdc : public CSerializePrx

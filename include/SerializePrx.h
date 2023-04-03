@@ -9,7 +9,6 @@
 #define __SERIALIZEPRX_H__
 
 #include "types.h"
-#include "types.h"
 #include "ProcessPrx.h"
 
 enum {

@@ -6,7 +6,8 @@
  * a loaded PRX file to a PS2DIS Map file.
  ***************************************************************/
 
-#include <stdio.h>
+#include <cstdio>
+
 #include "SerializePrxToMap.h"
 
 /* Build a name from a base and extention */

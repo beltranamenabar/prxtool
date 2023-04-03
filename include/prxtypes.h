@@ -9,6 +9,7 @@
 #define __PRXTYPES_H__
 
 #include <limits.h>
+
 #include "types.h"
 
 #define PSP_MODULE_MAX_NAME 28

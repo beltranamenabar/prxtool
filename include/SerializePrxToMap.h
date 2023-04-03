@@ -9,7 +9,8 @@
 #ifndef __SERIALIZEPRXTOMAP_H__
 #define __SERIALIZEPRXTOMAP_H__
 
-#include <stdio.h>
+#include <cstdio>
+
 #include "SerializePrx.h"
 
 class CSerializePrxToMap : public CSerializePrx

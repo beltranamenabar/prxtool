@@ -9,9 +9,11 @@
 #ifndef __NIDMGR_H__
 #define __NIDMGR_H__
 
-#include "types.h"
-#include <tinyxml2.h>
 #include <vector>
+
+#include <tinyxml2.h>
+
+#include "types.h"
 
 #define LIB_NAME_MAX 64
 #define LIB_SYMBOL_NAME_MAX 128

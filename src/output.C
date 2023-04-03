@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+
 #include "output.h"
 
 bool COutput::m_blDebug = false;

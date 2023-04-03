@@ -5,8 +5,9 @@
  * disasm.C - Implementation of a MIPS disassembler
  ***************************************************************/
 
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
+
 #include "disasm.h"
 
 /* Format codes

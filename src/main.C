@@ -5,11 +5,13 @@
  * main.C - Main function for PRXTool
  ***************************************************************/
 
-#include <stdio.h>
-#include <ctype.h>
-#include <unistd.h>
+#include <cstdio>
+#include <cctype>
 #include <cassert>
+
+#include <unistd.h>
 #include <sys/stat.h>
+
 #include "SerializePrxToIdc.h"
 #include "SerializePrxToXml.h"
 #include "SerializePrxToMap.h"

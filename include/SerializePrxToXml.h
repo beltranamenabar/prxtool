@@ -9,7 +9,8 @@
 #ifndef __SERIALIZEPRXTOXML_H__
 #define __SERIALIZEPRXTOXML_H__
 
-#include <stdio.h>
+#include <cstdio>
+
 #include "SerializePrx.h"
 
 class CSerializePrxToXml : public CSerializePrx

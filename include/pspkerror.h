@@ -7,7 +7,7 @@
 #ifndef PSPKERROR_H
 #define PSPKERROR_H
 
-#include <stdlib.h>
+#include <cstdlib>
 
 struct PspErrorCode
 {

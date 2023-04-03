@@ -6,7 +6,8 @@
  * a loaded PRX to an XML file.
  ***************************************************************/
 
-#include <stdio.h>
+#include <cstdio>
+
 #include "SerializePrxToXml.h"
 
 CSerializePrxToXml::CSerializePrxToXml(FILE *fpOut)
