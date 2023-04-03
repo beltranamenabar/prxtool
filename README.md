@@ -11,13 +11,12 @@ Installation
 
 To compile `prxtool`, run:
 
-    $ ./bootstrap
-    $ ./configure
-    $ make
+    $ cmake -B build -DCMAKE_BUILD_TYPE=Release
+    $ cmake --build build
 
 You can install it by running:
 
-    $ [sudo] make install
+    $ [sudo] cmake --install build
 
 License
 -------
