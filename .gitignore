@@ -1,0 +1,8 @@
+# ides
+.vscode/
+.idea/
+.vs/
+
+# build folder variants
+build/
+out/

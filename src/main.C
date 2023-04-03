@@ -17,7 +17,9 @@
 #include "output.h"
 #include "getargs.h"
 
+#ifndef PRXTOOL_VERSION
 #define PRXTOOL_VERSION "1.1"
+#endif
 
 enum OutputMode
 {

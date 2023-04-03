@@ -6,12 +6,16 @@
  * of NID Libraries.
  ***************************************************************/
 
-#include <stdlib.h>
-#include <tinyxml/tinyxml.h>
+#include <cstdlib>
+#include <cassert>
+
+#include <tinyxml2.h>
+
 #include "output.h"
 #include "NidMgr.h"
 #include "prxtypes.h"
 
+using namespace tinyxml2;
 struct SyslibEntry
 {
 	unsigned int nid;
@@ -172,16 +176,16 @@ const char *CNidMgr::SearchLibs(const char *lib, u32 nid)
 }
 
 /* Read the NID data from the XML file */
-const char* CNidMgr::ReadNid(TiXmlElement *pElement, u32 &nid)
+const char* CNidMgr::ReadNid(XMLElement *pElement, u32 &nid)
 {
-	TiXmlHandle nidHandle(pElement);
-	TiXmlText *pNid;
-	TiXmlText *pName;
+	XMLHandle nidHandle(pElement);
+	XMLText *pNid;
+	XMLText *pName;
 	const char* szName;
 
 	szName = NULL;
-	pNid = nidHandle.FirstChild("NID").FirstChild().Text();
-	pName = nidHandle.FirstChild("NAME").FirstChild().Text();
+	pNid = nidHandle.FirstChildElement("NID").FirstChild().ToText();
+	pName = nidHandle.FirstChildElement("NAME").FirstChild().ToText();
 
 	if((pNid != NULL) && (pName != NULL))
 	{
@@ -193,9 +197,9 @@ const char* CNidMgr::ReadNid(TiXmlElement *pElement, u32 &nid)
 }
 
 /* Count the number of nids in the current element */
-int CNidMgr::CountNids(TiXmlElement *pElement, const char *name)
+int CNidMgr::CountNids(XMLElement *pElement, const char *name)
 {
-	TiXmlElement *pIterator;
+	XMLElement *pIterator;
 	u32 nid;
 	int iCount = 0;
 
@@ -213,13 +217,13 @@ int CNidMgr::CountNids(TiXmlElement *pElement, const char *name)
 }
 
 /* Process a library XML element */
-void CNidMgr::ProcessLibrary(TiXmlElement *pLibrary, const char *prx_name, const char *prx)
+void CNidMgr::ProcessLibrary(XMLElement *pLibrary, const char *prx_name, const char *prx)
 {
-	TiXmlHandle libHandle(pLibrary);
-	TiXmlText *elmName;
-	TiXmlText *elmFlags;
-	TiXmlElement *elmFunction;
-	TiXmlElement *elmVariable;
+	XMLHandle libHandle(pLibrary);
+	XMLText *elmName;
+	XMLText *elmFlags;
+	XMLElement *elmFunction;
+	XMLElement *elmVariable;
 	int fCount;
 	int vCount;
 	bool blMasterNids = false;
@@ -227,8 +231,8 @@ void CNidMgr::ProcessLibrary(TiXmlElement *pLibrary, const char *prx_name, const
 	assert(prx_name != NULL);
 	assert(prx != NULL);
 
-	elmName = libHandle.FirstChild("NAME").FirstChild().Text();
-	elmFlags = libHandle.FirstChild("FLAGS").FirstChild().Text();
+	elmName = libHandle.FirstChildElement("NAME").FirstChild().ToText();
+	elmFlags = libHandle.FirstChildElement("FLAGS").FirstChild().ToText();
 	if(elmName)
 	{
 		LibraryEntry *pLib;
@@ -252,8 +256,8 @@ void CNidMgr::ProcessLibrary(TiXmlElement *pLibrary, const char *prx_name, const
 
 			strcpy(pLib->prx_name, prx_name);
 			strcpy(pLib->prx, prx);
-			elmFunction = libHandle.FirstChild("FUNCTIONS").FirstChild("FUNCTION").Element();
-			elmVariable = libHandle.FirstChild("VARIABLES").FirstChild("VARIABLE").Element();
+			elmFunction = libHandle.FirstChildElement("FUNCTIONS").FirstChildElement("FUNCTION").ToElement();
+			elmVariable = libHandle.FirstChildElement("VARIABLES").FirstChildElement("VARIABLE").ToElement();
 			fCount = CountNids(elmFunction, "FUNCTION");
 			vCount = CountNids(elmVariable, "VARIABLE");
 			pLib->vcount = vCount;
@@ -320,18 +324,18 @@ void CNidMgr::ProcessLibrary(TiXmlElement *pLibrary, const char *prx_name, const
 }
 
 /* Process a PRXFILE XML element */
-void CNidMgr::ProcessPrxfile(TiXmlElement *pPrxfile)
+void CNidMgr::ProcessPrxfile(XMLElement *pPrxfile)
 {
-	TiXmlHandle prxHandle(pPrxfile);
-	TiXmlElement *elmLibrary;
-	TiXmlText *txtName;
-	TiXmlText *txtPrx;
+	XMLHandle prxHandle(pPrxfile);
+	XMLElement *elmLibrary;
+	XMLText *txtName;
+	XMLText *txtPrx;
 	const char *szPrx;
 
-	txtPrx = prxHandle.FirstChild("PRX").FirstChild().Text();
-	txtName = prxHandle.FirstChild("PRXNAME").FirstChild().Text();
+	txtPrx = prxHandle.FirstChildElement("PRX").FirstChild().ToText();
+	txtName = prxHandle.FirstChildElement("PRXNAME").FirstChild().ToText();
 
-	elmLibrary = prxHandle.FirstChild("LIBRARIES").FirstChild("LIBRARY").Element();
+	elmLibrary = prxHandle.FirstChildElement("LIBRARIES").FirstChildElement("LIBRARY").ToElement();
 	while(elmLibrary)
 	{
 		COutput::Puts(LEVEL_DEBUG, "Found LIBRARY");
@@ -357,16 +361,18 @@ void CNidMgr::ProcessPrxfile(TiXmlElement *pPrxfile)
 /* Add an XML file to the current library list */
 bool CNidMgr::AddXmlFile(const char *szFilename)
 {
-	TiXmlDocument doc(szFilename);
+	XMLDocument doc;
 	bool blRet = false;
 
-	if(doc.LoadFile())
+	
+
+	if(!doc.LoadFile(szFilename))
 	{
 		COutput::Printf(LEVEL_DEBUG, "Loaded XML file %s", szFilename);
-		TiXmlHandle docHandle(&doc);
-		TiXmlElement *elmPrxfile;
+		XMLHandle docHandle(&doc);
+		XMLElement *elmPrxfile;
 
-		elmPrxfile = docHandle.FirstChild("PSPLIBDOC").FirstChild("PRXFILES").FirstChild("PRXFILE").Element();
+		elmPrxfile = docHandle.FirstChildElement("PSPLIBDOC").FirstChildElement("PRXFILES").FirstChildElement("PRXFILE").ToElement();
 		while(elmPrxfile)
 		{
 			COutput::Puts(LEVEL_DEBUG, "Found PRXFILE");

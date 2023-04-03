@@ -10,7 +10,7 @@
 #define __NIDMGR_H__
 
 #include "types.h"
-#include <tinyxml/tinyxml.h>
+#include <tinyxml2.h>
 #include <vector>
 
 #define LIB_NAME_MAX 64
@@ -20,6 +20,8 @@
 #define FUNCTION_ARGS_MAX   128
 #define FUNCTION_RET_MAX    64
 
+
+using namespace tinyxml2;
 struct LibraryEntry;
 
 /** Structure to hold a single library nid */
@@ -82,10 +84,10 @@ class CNidMgr
 	/** Search the loaded libs for a symbol */
 	const char *SearchLibs(const char *lib, u32 nid);
 	void FreeMemory();
-	const char* ReadNid(TiXmlElement *pElement, u32 &nid);
-	int CountNids(TiXmlElement *pElement, const char *name);
-	void ProcessLibrary(TiXmlElement *pLibrary, const char *prx_name, const char *prx);
-	void ProcessPrxfile(TiXmlElement *pPrxfile);
+	const char* ReadNid(XMLElement *pElement, u32 &nid);
+	int CountNids(XMLElement *pElement, const char *name);
+	void ProcessLibrary(XMLElement *pLibrary, const char *prx_name, const char *prx);
+	void ProcessPrxfile(XMLElement *pPrxfile);
 public:
 	CNidMgr();
 	~CNidMgr();
